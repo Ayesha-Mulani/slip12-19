@@ -1,0 +1,24 @@
+SLIP 12 19 #pip install pandas scikit-learn matplotlib
+
+import pandas as pd  # Import pandas for data manipulation
+from sklearn.linear_model import LinearRegression # Import LinearRegression from scikit-learn
+
+# Load the dataset
+df = pd.read_csv('cars_data.csv')  # Read the CSV file
+
+# Define features (X) and target variable (y)
+X = df[['Volume', 'Weight']]  # Features: Volume and Weight
+y = df['CO2']  # Target variable: CO2 emissions
+
+# Initialize the Linear Regression model
+regr = LinearRegression()  # Create a Linear Regression model
+
+# Fit the model with the data
+regr.fit(X, y)  # Train the model with features and target
+
+# Predict the CO2 emission of a car where the weight is 2300kg, and the volume is 1300cm3
+input_data = [[2300, 1300]]  # Create a list for input data
+predictedCO2 = regr.predict(input_data)  # Make a prediction
+
+# Print the predicted CO2 emission
+print("Predicted CO2 emission:", predictedCO2[0])  # Display the result
