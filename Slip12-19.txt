@@ -1,24 +1,31 @@
-SLIP 12 19 #pip install pandas scikit-learn matplotlib
-
-import pandas as pd  # Import pandas for data manipulation
-from sklearn.linear_model import LinearRegression # Import LinearRegression from scikit-learn
+import pandas as pd
+from sklearn.linear_model import LinearRegression
 
 # Load the dataset
-df = pd.read_csv('cars_data.csv')  # Read the CSV file
+df = pd.read_csv('cars.csv')  # Ensure this file path is correct
+
+# Print the first few rows to check column names
+print(df.head())
+print(df.columns)
+
+# Clean the 'engine' and 'mileage' columns to be numeric
+# Handle multiple units in mileage by removing all non-numeric characters
+df['engine'] = df['engine'].str.replace(' CC', '').astype(float)
+df['mileage'] = df['mileage'].str.extract('(\d+\.\d+|\d+)').astype(float)  # Extract numeric values
 
 # Define features (X) and target variable (y)
-X = df[['Volume', 'Weight']]  # Features: Volume and Weight
-y = df['CO2']  # Target variable: CO2 emissions
+X = df[['engine', 'mileage']]  # Replace with actual column names in your dataset
+y = df['max_power']  # Replace with actual target column name in your dataset
 
 # Initialize the Linear Regression model
-regr = LinearRegression()  # Create a Linear Regression model
+regr = LinearRegression()
 
 # Fit the model with the data
-regr.fit(X, y)  # Train the model with features and target
+regr.fit(X, y)
 
 # Predict the CO2 emission of a car where the weight is 2300kg, and the volume is 1300cm3
-input_data = [[2300, 1300]]  # Create a list for input data
-predictedCO2 = regr.predict(input_data)  # Make a prediction
+input_data = [[2300, 1300]]  # Replace with relevant values for engine and mileage if needed
+predictedCO2 = regr.predict(input_data)
 
 # Print the predicted CO2 emission
-print("Predicted CO2 emission:", predictedCO2[0])  # Display the result
+print("Predicted CO2 emission:", predictedCO2[0])
